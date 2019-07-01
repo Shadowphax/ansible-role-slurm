@@ -48,4 +48,3 @@
     - /var/log/slurm
     - /var/slurm/checkpoint
     - /opt/slurm-{{ slurm_version }}
-
