@@ -1,0 +1,48 @@
+---
+# 1. Task to install dependencies for SLURM
+# 2. Task to compile and install SLURM
+
+- name: Set Debian facts
+  set_fact:
+    SLURM_VERSION: "{{ slurm_version }}"
+  when: ansible_os_family == "Debian"
+
+- name: Update package cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 2400
+
+- name: Install SLURM Dependencies
+  apt: 
+   name: "{{ packages }}"
+  vars: 
+   packages: 
+   - gcc
+   - libpq5
+   - libmunge-dev
+   - libmunge2
+   - munge 
+   - bzip2
+   - make
+
+- git: Pull source from git
+  repo: 'git://github.com/SchedMD/slurm.git'
+  dest: /tmp/slurm-{{ slurm_version }}
+  version: slurm-{{ slurm_version }}
+
+- name: Configure SLURM
+  command: "{{ item }} chdir=/tmp/slurm-{{ slurm_version }}" 
+  with_items: 
+  - ./configure --prefix=/opt/slurm-{{ slurm_version }}
+
+- name: Build the SLURM target
+  make:
+   chdir: /tmp/slurm-{{ slurm_version }}
+   params:
+      NUM_THREADS: 2
+
+- name: Run the 'make install' against target
+  make: 
+   chdir: /tmp/slurm-{{ slurm_version }}
+   target: install 
+  become: yes
