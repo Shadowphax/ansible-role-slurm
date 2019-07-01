@@ -2,10 +2,9 @@
 # 1. Task to install dependencies for SLURM
 # 2. Task to compile and install SLURM
 
-- name: Set Debian facts
+- name: Set SLURM version
   set_fact:
     SLURM_VERSION: "{{ slurm_version }}"
-  when: ansible_os_family == "Debian"
 
 - name: Update package cache
   apt: 

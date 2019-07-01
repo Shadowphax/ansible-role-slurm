@@ -1,7 +1,7 @@
 ---
 - include: slurm-deps.yml
 
-# Confirmation that munge is running 
+# Confirmation that munge is running.
 - name: Start Munge Service
   service: name=munge state=started
   register: munge_installed
@@ -14,26 +14,38 @@
     msg: "File is not owned by munge"
   when: munge_key.pw_name != 'munge'
 
-- name: Set SLURM conf file path as fact Debian
+- name: Set SLURM conf file path as fact
   set_fact:
     SLURM_CONF: "/opt/slurm-{{ slurm_version }}/etc/slurm.conf"
     SLURM_DAEMON: "slurmd"
     SLURM_SERVICE: "slurmctld"
 
-# SLURM User/Group Creation
+# SLURM User/Group Creation.
 - name: Create Slurm User 
   user: 
     name: "{{ slurm_user }}"
     gid: "{{ slurm_gid }}"
     shell: /bin/bash 
     system: yes 
-    group: "{{slurm_user}}"
+    group: "{{ slurm_user }}"
 
 - name: Create SLURM Group
   group: 
-    name: "{{slurm_group}}" 
-    gid: "{{slurm_uid}}" 
+    name: "{{ slurm_group }}" 
+    gid: "{{ slurm_uid }}" 
     system: yes
     state: present
 
+# Folder Creation for SLURM to function.
+- name: Create folders and user permissions
+  file: 
+   path: "{{item}}" 
+   state: directory
+   owner: "{{ slurm_user }}"
+   group: "{{ slurm_group }}"
+  with_items:
+    - /var/spool/slurm
+    - /var/log/slurm
+    - /var/slurm/checkpoint
+    - /opt/slurm-{{ slurm_version }}
 
