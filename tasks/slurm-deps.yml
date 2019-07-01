@@ -1,6 +1,6 @@
 ---
-# 1. Task to install dependencies for SLURM
-# 2. Task to compile and install SLURM
+# Task to install dependencies for SLURM
+# Task to compile and install SLURM
 
 - name: Set SLURM version
   set_fact:
@@ -32,7 +32,7 @@
 - name: Configure SLURM
   command: "{{ item }} chdir=/tmp/slurm-{{ slurm_version }}" 
   with_items: 
-  - ./configure --prefix=/opt/slurm-{{ slurm_version }}
+  - ./configure --prefix={{ slurm_path }}{{ slurm_version }} --sysconfdir={{ slurm_path }}{{ slurm_version }}/etc
 
 - name: Build the SLURM target
   make:
