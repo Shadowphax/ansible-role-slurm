@@ -69,22 +69,22 @@
 - name: Create Slurm User 
   user: 
     name: "{{ slurm_user }}"
-    gid: "{{ slurm_gid }}"
+    uid: "{{ slurm_gid }}"
     shell: /bin/bash 
     system: yes 
     group: "{{ slurm_user }}"
 
 - name: Create SLURM Group
   group: 
-    name: "{{ slurm_group }}" 
-    gid: "{{ slurm_uid }}" 
+    name: "{{ slurm_group }}"
+    gid: "{{ slurm_uid }}"
     system: yes
     state: present
 
 # Folder Creation for SLURM to function.
 - name: Create folders and user permissions
   file: 
-   path: "{{item}}" 
+   path: "{{item}}"
    state: directory
    owner: "{{ slurm_user }}"
    group: "{{ slurm_group }}"
