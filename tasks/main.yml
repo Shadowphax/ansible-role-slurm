@@ -66,20 +66,20 @@
     SLURM_SERVICE: "slurmctld"
 
 # SLURM User/Group Creation.
-- name: Create Slurm User 
-  user: 
-    name: "{{ slurm_user }}"
-    uid: "{{ slurm_gid }}"
-    shell: /bin/bash 
-    system: yes 
-    group: "{{ slurm_user }}"
-
 - name: Create SLURM Group
   group: 
     name: "{{ slurm_group }}"
     gid: "{{ slurm_uid }}"
     system: yes
     state: present
+
+- name: Create SLURM User 
+  user: 
+    name: "{{ slurm_user }}"
+    uid: "{{ slurm_gid }}"
+    shell: /bin/bash 
+    system: yes 
+    group: "{{ slurm_user }}"
 
 # Folder Creation for SLURM to function.
 - name: Create folders and user permissions
