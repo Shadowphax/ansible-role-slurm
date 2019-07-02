@@ -11,7 +11,7 @@ slurm_group: slurm
 slurm_path: /opt/slurm-{{ slurm_version }}
 
 slurm_enable:
-  slurm_controller: false
-  slurm_headnode: false
-  slurm_compute: false
+  controller: false
+  headnode: false
+  compute: false
   
