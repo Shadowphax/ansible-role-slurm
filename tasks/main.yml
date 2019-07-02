@@ -46,6 +46,11 @@
    target: install 
   become: yes
 
+- name: Add bin/sbin directories to system-wide $PATH.
+  copy:
+   dest: /etc/profile.d/slurm.sh
+   content: 'PATH=$PATH:{{ slurm_bin_path }}'
+
 # Confirmation that munge is running.
 - name: Start Munge Service
   service: name=munge state=started
