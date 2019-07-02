@@ -22,6 +22,7 @@
    - munge 
    - bzip2
    - make
+
 - name: Pull source from git
   git: 
    repo: 'git://github.com/SchedMD/slurm.git'
@@ -56,7 +57,7 @@
 
 - fail: 
     msg: "File is not owned by munge"
-  when: munge_key.pw_name != 'munge'
+  when: munge_key.stat.pw_name != 'munge'
 
 - name: Set SLURM conf file path as fact
   set_fact:
