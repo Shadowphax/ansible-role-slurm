@@ -1,5 +1,49 @@
 ---
-- include: slurm-deps.yml
+
+# Installation and Configuration of SLURM
+- name: Set SLURM version
+  set_fact:
+    SLURM_VERSION: "{{ slurm_version }}"
+
+- name: Update package cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 2400
+
+- name: Install SLURM Dependencies
+  apt: 
+   name: "{{ packages }}"
+  vars: 
+   packages: 
+   - gcc
+   - libpq5
+   - libmunge-dev
+   - libmunge2
+   - munge 
+   - bzip2
+   - make
+
+- git: Pull source from git
+  repo: 'git://github.com/SchedMD/slurm.git'
+  dest: /tmp/slurm-{{ slurm_version }}
+  version: slurm-{{ slurm_version }}
+
+- name: Configure SLURM
+  command: "{{ item }} chdir=/tmp/slurm-{{ slurm_version }}" 
+  with_items: 
+  - ./configure --prefix={{ slurm_path }}{{ slurm_version }} --sysconfdir={{ slurm_path }}{{ slurm_version }}/etc --enable-debug
+
+- name: Build the SLURM target
+  make:
+   chdir: /tmp/slurm-{{ slurm_version }}
+   params:
+      NUM_THREADS: 2
+
+- name: Run the 'make install' against target
+  make: 
+   chdir: /tmp/slurm-{{ slurm_version }}
+   target: install 
+  become: yes
 
 # Confirmation that munge is running.
 - name: Start Munge Service
@@ -48,3 +92,12 @@
     - /var/log/slurm
     - /var/slurm/checkpoint
     - /opt/slurm-{{ slurm_version }}
+
+- include: controller.yml
+  when: slurm_enable.controller | default(false) | bool
+
+- include: compute.yml
+  when: slurm_enable.compute| default(false) | bool
+
+- include: headnode.yml
+  when: slurm_enable.headnode| default(false) | bool
