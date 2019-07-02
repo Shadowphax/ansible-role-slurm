@@ -3,9 +3,10 @@
 slurm_version: 19.05
 
 # SLURM Credential Variables
-slurm_user: slurm 
-slurm_gid: 5000
+slurm_user: slurm
 slurm_group: slurm
+slurm_gid: 5000
+slurm_uid: 5000
 
 # Paths and locations
 slurm_path: /opt/slurm-
