@@ -9,7 +9,7 @@ slurm_gid: 5000
 slurm_uid: 5000
 
 # Paths and locations
-slurm_path: "/opt/slurm-"
+slurm_path: "/opt/slurm-{{ slurm_version }}"
 slurm_bin_path: "/opt/slurm-{{ slurm_version }}/bin:/opt/slurm-{{ slurm_version }}/sbin"
 
 slurm_enable:
