@@ -32,7 +32,7 @@
 - name: Configure SLURM
   command: "{{ item }} chdir=/tmp/slurm-{{ slurm_version }}" 
   with_items: 
-  - ./configure --prefix={{ slurm_path }}{{ slurm_version }} --sysconfdir={{ slurm_path }}{{ slurm_version }}/etc --enable-debug
+  - ./configure --prefix={{ slurm_path }} --sysconfdir={{ slurm_path }}/etc --enable-debug
 
 - name: Build the SLURM target
   make:
