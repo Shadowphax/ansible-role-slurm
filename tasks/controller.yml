@@ -6,7 +6,8 @@
     dest: /lib/systemd/system/
     owner: root
     group: root
-    mode: '0644'   
+    mode: '0644'
+  become: yes      
 
 - name: Reload systemd config 
   systemd: 
@@ -24,7 +25,8 @@
     dest: /lib/systemd/system/
     owner: root
     group: root
-    mode: '0644'   
+    mode: '0644'  
+  become: yes  
 
 - name: Reload systemd config 
   systemd: 
