@@ -1,12 +1,8 @@
 ---
 
 - name: Copy SLURM systemd service 
-  copy:
-    src: /tmp/slurm-{{ slurm_version }}/etc/slurmd.service 
-    dest: /lib/systemd/system/
-    owner: root
-    group: root
-    mode: '0644'   
+  command: 
+   cp /tmp/slurm-{{ slurm_version }}/etc/slurmd.service /lib/systemd/system/  
 
 - name: Reload systemd config 
   systemd: 
