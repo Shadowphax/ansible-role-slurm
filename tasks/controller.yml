@@ -2,7 +2,7 @@
 
 - name: Copy SLURM slurmctld systemd service 
   copy:
-    src: /tmp/slurm-{{ slurm-version }}/etc/slurmctld.service 
+    src: /tmp/slurm-{{ slurm_version }}/etc/slurmctld.service 
     dest: /lib/systemd/system/
     owner: root
     group: root
@@ -21,7 +21,7 @@
 
 - name: Copy SLURM slurmdbd systemd service 
   copy:
-    src: /tmp/slurm-{{ slurm-version }}/etc/slurmdbd.service 
+    src: /tmp/slurm-{{ slurm_version }}/etc/slurmdbd.service 
     dest: /lib/systemd/system/
     owner: root
     group: root
