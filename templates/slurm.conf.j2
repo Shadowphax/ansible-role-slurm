@@ -1,11 +1,3 @@
-# SLURM Host Configuration
-{% for h in groups['controller'] -%}
-{% if h != inventory_hostname %}
-SlurmctldHost={{ hostvars[h]['ansible_nodename'] }}
-{% endif %}
-{% endfor %}
-
-# 
 #MailProg=/bin/mail 
 MpiDefault=none
 #MpiParams=ports=#-# 
@@ -44,6 +36,14 @@ SlurmctldLogFile=/var/log/slurm/slurmctld.log
 #SlurmdDebug=info 
 SlurmdLogFile=/var/log/slurm/slurm.log
 # 
+
+# SLURM hosts
+{% for h in groups['controller'] -%}
+{% if h != inventory_hostname %}
+SlurmctldHost={{ hostvars[h]['ansible_nodename'] }}
+{% endif %}
+{% endfor %}
+
 # COMPUTE NODES 
 
 {% for h in groups['workernodes'] -%}
