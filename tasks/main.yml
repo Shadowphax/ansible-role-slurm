@@ -102,10 +102,5 @@
     - /opt/slurm-{{ slurm_version }}/etc
 
 - include: controller.yml
-  when: slurm_enable.controller | default(false) | bool
-
 - include: compute.yml
-  when: slurm_enable.compute| default(false) | bool
-
 - include: headnode.yml
-  when: slurm_enable.headnode| default(false) | bool
