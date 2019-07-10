@@ -1,4 +1,5 @@
 ---
+
 - name: Copy SLURM systemd service 
   command: 
    cp /tmp/slurm-{{ slurm_version }}/etc/slurmd.service /lib/systemd/system/  
