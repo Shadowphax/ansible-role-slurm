@@ -1,5 +1,12 @@
-#
-SlurmctldHost=slurm-headnode
+# SLURM Host Configuration
+{% for h in groups['controller'] -%}
+{% if h != inventory_hostname %}
+SlurmctldHost="{{ hostvars[h]['ansible_nodename'] }}"
+ControlMachine="{{ hostvars[h]['ansible_nodename'] }}"
+ControlAddr={{ hostvars[h]['ansible_default_ipv4']['address'] }}
+{% endif %}
+{% endfor %}
+
 # 
 #MailProg=/bin/mail 
 MpiDefault=none
@@ -31,7 +38,7 @@ SelectTypeParameters=CR_Core
 # 
 # LOGGING AND ACCOUNTING 
 AccountingStorageType=accounting_storage/none
-ClusterName=slurm
+ClusterName= {{ slurm_cluster_name }}
 #JobAcctGatherFrequency=30 
 JobAcctGatherType=jobacct_gather/none
 #SlurmctldDebug=info 
@@ -40,5 +47,16 @@ SlurmctldLogFile=/var/log/slurm/slurmctld.log
 SlurmdLogFile=/var/log/slurm/slurm.log
 # 
 # COMPUTE NODES 
-NodeName=slk-wrk-[1-32] CPUs=2 State=UNKNOWN 
-PartitionName=ilifu Nodes=slk-wrk-[1-32] Default=YES MaxTime=INFINITE State=UP
+
+{% for h in groups['workernodes'] -%}
+{% if h != inventory_hostname %}
+Nodename="{{ hostvars[h]['ansible_nodename'] }} CPUs={{ hostvars[h]['ansible_processor_vcpus'] }} State=UNKNOWN"
+{% endif %}
+{% endfor %}
+
+# Partition Information
+{% for h in groups['workernodes'] -%}
+{% if h != inventory_hostname %}
+PartitionName=slurmmee Nodes="{{ hostvars[h]['ansible_nodename'] }} Default=YES MaxTime=INFINITE State=UP"
+{% endif %}
+{% endfor %}

@@ -101,12 +101,6 @@
     - /var/slurm/checkpoint
     - /opt/slurm-{{ slurm_version }}
 
-# Copy the slurm.conf to all slurm nodes. 
-- name: Copy slurm.conf 
-  template:
-   src: slurm.conf.j2
-   dest: /opt/slurm-{{ slurm_version }}/etc/slurm.conf
-
 - include: controller.yml
   when: slurm_enable.controller | default(false) | bool
 
