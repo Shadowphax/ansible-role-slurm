@@ -45,7 +45,6 @@ SlurmctldHost={{ hostvars[c]['ansible_nodename'] }}
 {% endfor %}
 
 # COMPUTE NODES 
-
 {% for h in groups['workernodes'] -%}
 {% if h != inventory_hostname %}
 Nodename="{{ hostvars[h]['ansible_nodename'] }} CPUs={{ hostvars[h]['ansible_processor_vcpus'] }} State=UNKNOWN"
