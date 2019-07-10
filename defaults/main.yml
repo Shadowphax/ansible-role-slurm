@@ -2,6 +2,9 @@
 # Version of SLURM
 slurm_version: 19.05
 
+# SLURM Cluster 
+slurm_cluster_name: slurmmee
+
 # SLURM Credential Variables
 slurm_user: slurm
 slurm_group: slurm
