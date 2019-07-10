@@ -3,7 +3,7 @@
 {% if h != inventory_hostname %}
 SlurmctldHost="{{ hostvars[h]['ansible_nodename'] }}"
 ControlMachine="{{ hostvars[h]['ansible_nodename'] }}"
-ControlAddr={{ hostvars[h]['ansible_default_ipv4']['address'] }}
+ControlAddr="{{ hostvars[h]['ansible_default_ipv4']['address'] }}"
 {% endif %}
 {% endfor %}
 
