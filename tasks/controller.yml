@@ -22,8 +22,7 @@
    src: slurm.conf.j2
    dest: /opt/slurm-{{ slurm_version }}/etc/slurm.conf
   notify: 
-    - Restart Slurmctld 
-    - Restart Slurmdbd
+    - Restart Slurmctld
 
 - name: Ensure slurmd is not running in front node
   shell: pgrep slurmd && killall slurmd
