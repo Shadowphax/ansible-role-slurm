@@ -39,7 +39,7 @@ SlurmdLogFile=/var/log/slurm/slurm.log
 
 # Slurm Controller Configuration 
 {% for controller in groups['controller'] -%}
-{% if controller == inventory_hostname %}
+{% if controller != inventory_hostname %}
 SlurmctldHost={{ hostvars[controller]['ansible_nodename'] }}
 {% endif %}
 {% endfor %}
@@ -47,13 +47,13 @@ SlurmctldHost={{ hostvars[controller]['ansible_nodename'] }}
 # Compute Nodes
 {% for worker in groups['workernodes'] -%}
 {% if worker != inventory_hostname %}
-Nodename="{{ hostvars[worker]['ansible_nodename'] }} CPUs={{ hostvars[worker]['ansible_processor_vcpus'] }} State=UNKNOWN"
+Nodename={{ hostvars[worker]['ansible_nodename'] }} CPUs={{ hostvars[worker]['ansible_processor_vcpus'] }} State=UNKNOWN
 {% endif %}
 {% endfor %}
 
 # Partition Information
 {% for worker in groups['workernodes'] -%}
 {% if worker != inventory_hostname %}
-PartitionName=slurmmee Nodes="{{ hostvars[worker]['ansible_nodename'] }} Default=YES MaxTime=INFINITE State=UP"
+PartitionName=slurmmee Nodes={{ hostvars[worker]['ansible_nodename'] }} Default=YES MaxTime=INFINITE State=UP
 {% endif %}
 {% endfor %}
