@@ -37,14 +37,14 @@ SlurmctldLogFile=/var/log/slurm/slurmctld.log
 SlurmdLogFile=/var/log/slurm/slurm.log
 # 
 
-# SLURM hosts
+# Slurm Controller Configuration 
 {% for controller in groups['controller'] -%}
 {% if controller == inventory_hostname %}
 SlurmctldHost={{ hostvars[controller]['ansible_nodename'] }}
 {% endif %}
 {% endfor %}
 
-# COMPUTE NODES 
+# Compute Nodes
 {% for worker in groups['workernodes'] -%}
 {% if worker != inventory_hostname %}
 Nodename="{{ hostvars[worker]['ansible_nodename'] }} CPUs={{ hostvars[worker]['ansible_processor_vcpus'] }} State=UNKNOWN"
