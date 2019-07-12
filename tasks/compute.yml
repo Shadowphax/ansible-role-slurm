@@ -18,6 +18,7 @@
   template:
    src: slurm.conf.j2
    dest: /opt/slurm-{{ slurm_version }}/etc/slurm.conf
+  register: slurmupdate
   notify: 
     - Restart Slurmd 
   tags: 

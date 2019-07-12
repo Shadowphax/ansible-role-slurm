@@ -5,13 +5,19 @@
   service: 
    name: slurmd 
    state: restarted
+   enabled: yes 
+  when: slurmupdate
    
 - name: Restart Slurmdbd
   service: 
    name: slurmdbd 
    state: restarted
+   enabled: yes 
+  when: slurmupdate
 
 - name: Restart Slurmctld 
   service: 
    name: slurmctld 
    state: restarted
+   enabled: yes 
+  when: slurmupdate
