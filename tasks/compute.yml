@@ -20,3 +20,5 @@
    dest: /opt/slurm-{{ slurm_version }}/etc/slurm.conf
   notify: 
     - Restart Slurmd 
+  tags: 
+    slurmconf 

@@ -23,6 +23,8 @@
    dest: /opt/slurm-{{ slurm_version }}/etc/slurm.conf
   notify: 
     - Restart Slurmctld
+  tags: 
+    slurmconf 
 
 - name: Ensure slurmd is not running in front node
   shell: pgrep slurmd && killall slurmd
@@ -36,6 +38,7 @@
   become: true
   become_user: slurm
   command: scontrol reconfigure
+
 
 
 
