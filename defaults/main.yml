@@ -16,7 +16,7 @@ slurm_path: "/opt/slurm-{{ slurm_version }}"
 slurm_bin_path: "/opt/slurm-{{ slurm_version }}/bin:/opt/slurm-{{ slurm_version }}/sbin"
 
 slurm_enable:
-  controller: false
-  headnode: false
-  compute: false
+  controller: true
+  headnode: true
+  compute: true
   
