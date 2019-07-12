@@ -39,7 +39,7 @@ SlurmdLogFile=/var/log/slurm/slurm.log
 
 # Slurm Controller Configuration 
 {% for controller in groups['controller'] -%}
-{% if controller != inventory_hostname %}
+{% if controller == inventory_hostname %}
 SlurmctldHost={{ hostvars[controller]['ansible_nodename'] }}
 {% endif %}
 {% endfor %}
